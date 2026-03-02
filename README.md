@@ -1,69 +1,58 @@
 # 📊 Fundamentos de Machine Learning em Python
 
-Este repositório contém um **script educacional único** que implementa, do zero (sem bibliotecas de ML), os principais conceitos teóricos de Machine Learning.
-O objetivo não é performance, mas **entendimento conceitual** — cada parte do código corresponde diretamente a um tópico clássico estudado em cursos universitários.
+Este projeto é uma implementação didática dos principais conceitos fundamentais de Machine Learning, desenvolvida inteiramente em Python puro, sem o uso de bibliotecas especializadas como scikit-learn.
 
-O arquivo principal demonstra como um modelo:
-
-1. faz previsões
-2. mede erro
-3. é avaliado
-4. aprende (otimização)
-5. evita overfitting
+O objetivo principal é demonstrar, de forma clara e estruturada, como os componentes matemáticos e conceituais de Machine Learning se conectam na prática.
 
 ---
 
-## 🎯 Objetivo
+## 🎯 Objetivo do Projeto
 
-Mostrar de forma prática a conexão entre:
+Demonstrar, de forma educacional:
 
-* Modelo matemático
-* Função de perda
-* Risco empírico
-* Métricas de avaliação
-* Otimização (Gradient Descent)
-* Regularização
-* Generalização
+* Como um modelo linear realiza previsões
+* Como calcular funções de perda (loss functions)
+* O que é risco empírico
+* Como avaliar modelos de regressão e classificação
+* Como funciona o Gradient Descent
+* O que é regularização
+* O que significa generalização do modelo
 
-Tudo foi implementado manualmente para facilitar o aprendizado.
-
----
-
-## 📁 Estrutura Conceitual do Script
-
-### 1️⃣ Regressão
-
-Implementação de um modelo linear:
-
-[
-\hat{y} = w_1x_1 + w_2x_2 + ... + b
-]
-
-O script calcula:
-
-* Previsão do modelo
-* **MSE (Mean Squared Error)**
-* **MAE (Mean Absolute Error)**
-* **Huber Loss**
-* **RMSE (Root Mean Squared Error)**
-* **R² (Coeficiente de Determinação)**
-
-Isso demonstra como avaliar modelos com saída numérica contínua.
+O código foi estruturado para funcionar como material de estudo e revisão teórica.
 
 ---
 
-### 2️⃣ Classificação
+## 🧠 Estrutura do Código
 
-Para problemas categóricos (ex.: 0 ou 1), o código implementa:
+### 🔹 Regressão
 
-* 0-1 Loss (taxa de erro)
+Inclui:
+
+* Modelo de Regressão Linear
+* MSE (Mean Squared Error)
+* MAE (Mean Absolute Error)
+* Huber Loss
+* RMSE (Root Mean Squared Error)
+* R² (Coeficiente de Determinação)
+
+Essas métricas são utilizadas para avaliar modelos que preveem valores numéricos contínuos.
+
+---
+
+### 🔹 Classificação
+
+Inclui:
+
+* 0-1 Loss
 * Log Loss (Cross-Entropy)
 
+Essas funções são utilizadas para medir o erro em problemas de classificação.
+
 ---
 
-### 3️⃣ Avaliação de Classificação
+### 🔹 Avaliação de Classificação
 
-Métricas clássicas usadas em ML:
+Métricas implementadas:
 
 * Accuracy
 * Precision
@@ -71,73 +60,70 @@ Métricas clássicas usadas em ML:
 * F1-Score
 * Matriz de Confusão
 
-Essas métricas são padrão para avaliar classificadores.
+Essas métricas são amplamente utilizadas na avaliação de classificadores.
 
 ---
 
-### 4️⃣ Otimização (Treinamento do Modelo)
+### 🔹 Otimização
 
-Implementação manual do **Gradient Descent**:
+Implementação manual de:
 
-[
-w = w - \eta \frac{\partial L}{\partial w}
-]
+* Gradient Descent
 
-Mostra como o modelo aprende ajustando seus parâmetros para minimizar o erro.
+Mostra como os pesos do modelo são ajustados para minimizar a função de perda.
 
 ---
 
-### 5️⃣ Regularização
+### 🔹 Regularização
 
-Para reduzir overfitting:
+Inclui:
 
 * L1 (Lasso)
 * L2 (Ridge)
 
----
-
-### 6️⃣ Generalização
-
-Demonstração conceitual:
-
-* erro de treino
-* erro de teste
-
-Explica a diferença entre **underfitting** e **overfitting**.
+Demonstra como reduzir overfitting penalizando a complexidade do modelo.
 
 ---
 
-## ▶️ Como executar
+### 🔹 Generalização
 
-No terminal, dentro da pasta do projeto:
+Demonstra conceitualmente:
 
-```bash
-python main.py
-```
+* Erro de treino
+* Erro de teste
 
-*(ou o nome do arquivo que você salvou)*
+Mostra a diferença entre overfitting e underfitting.
 
 ---
 
-## 📚 O que você aprende com este código
+## ▶️ Como Executar
 
-Este projeto cobre praticamente o ciclo completo de ML básico:
+1. Salve o arquivo Python.
+2. Execute no terminal com:
+
+python nome_do_arquivo.py
+
+---
+
+## 📚 Conceitos Abordados
+
+Este projeto cobre os pilares fundamentais de Machine Learning:
 
 * Modelagem matemática
 * Funções de perda
-* Avaliação
-* Treinamento
+* Avaliação de desempenho
+* Otimização
 * Regularização
 * Generalização
-
-Ele foi feito como material de estudo e revisão teórica.
 
 ---
 
 ## ⚠️ Observação
 
-Este projeto é **educacional**.
-Em aplicações reais usamos bibliotecas como `scikit-learn`, `numpy` e `pandas`, mas aqui os cálculos são feitos manualmente para deixar claro o funcionamento interno dos algoritmos.
+Este projeto é educacional.
+Em aplicações reais, bibliotecas como scikit-learn, numpy e pandas são normalmente utilizadas.
+
+Aqui, todos os cálculos são feitos manualmente para facilitar a compreensão dos fundamentos.
 
 ---
 
@@ -145,4 +131,4 @@ Em aplicações reais usamos bibliotecas como `scikit-learn`, `numpy` e `pandas`
 
 Projeto desenvolvido para estudo de fundamentos de Machine Learning e construção de portfólio.
 
-Sinta-se livre para usar, modificar e estudar o código.
+Sinta-se livre para utilizar, adaptar e expandir o código.

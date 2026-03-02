@@ -1,218 +1,183 @@
-# Regressao
+import math
 
-    # Forma Geral de um modelo linear
+# =========================================================
+# ---------------------- REGRESSAO -------------------------
+# =========================================================
 
-        # Exemplo com 3 variáveis
+print("\n--- Regressao ---")
 
-w1 = 0.5
-w2 = 1.2
-w3 = -0.3
-b = 2
+# Modelo Linear
+w1, w2, w3, b = 0.5, 1.2, -0.3, 2
+x1, x2, x3 = 10, 5, 8
 
-x1 = 10
-x2 = 5
-x3 = 8
+y_pred = w1*x1 + w2*x2 + w3*x3 + b
+print("\nPrevisão (Exemplo Modelo Regressao Linear) =", y_pred)
 
-y_hat = w1*x1 + w2*x2 + w3*x3 + b
 
-print("\nPrevisão (Exemplo Modelo Linear) =", y_hat)
-
-    # Risco Empirico
-
-        # MSE (Mean Squared Error)
-            # Valores reais
+# ----------------- MSE -----------------
 y = [10, 5, 8]
-
-            # Previsões do modelo
 y_hat = [8, 6, 9]
-
-            # Número de observações
 n = len(y)
 
+def mse_loss(y_real, y_pred):
+    return (y_real - y_pred)**2
 
-            # Função de perda (erro quadrático)
-def loss(y_real, y_pred):
-    return (y_real - y_pred) ** 2
+mse = sum(mse_loss(y[i], y_hat[i]) for i in range(n)) / n
+print("\nRisco Empírico (MSE) =", mse)
 
 
-            # Cálculo do risco empírico (média dos erros quadráticos)
-risco_empirico = sum(loss(y[i], y_hat[i]) for i in range(n)) / n
-
-print("\nRisco Empírico (MSE) =", risco_empirico)
-
-        # MAE (Mean Absolut Error)
-
-            # Valores reais
-y = [10, 5, 8]
-
-            # Previsões do modelo
-y_hat = [8, 6, 9]
-
-            # Número de observações
+# ----------------- R² -----------------
+y = [3, 5, 7, 9]
+y_hat = [2.5, 5.5, 6.5, 10]
 n = len(y)
 
-            # Função de perda (erro absoluto)
-def loss(y_real, y_pred):
+y_mean = sum(y) / n
+ss_res = sum((y[i] - y_hat[i])**2 for i in range(n))
+ss_tot = sum((y[i] - y_mean)**2 for i in range(n))
+
+r2 = 1 - (ss_res / ss_tot)
+print("\nCoeficiente de Determinação (R²) =", r2)
+
+
+# ----------------- MAE -----------------
+y = [10, 5, 8]
+y_hat = [8, 6, 9]
+n = len(y)
+
+def mae_loss(y_real, y_pred):
     return abs(y_real - y_pred)
 
-            # Cálculo do risco empírico (média dos erros absolutos)
-risco_empirico = sum(loss(y[i], y_hat[i]) for i in range(n)) / n
+mae = sum(mae_loss(y[i], y_hat[i]) for i in range(n)) / n
+print("\nRisco Empírico (MAE) =", mae)
 
-print("\nRisco Empírico (MAE) =", risco_empirico)
 
-        # Huber Loss
-
-            # Valores reais
-y = [10, 5, 8]
-
-            # Previsões do modelo
-y_hat = [8, 6, 9]
-
-            # Número de observações
-n = len(y)
-
-            # Parâmetro delta (define a transição entre MSE e MAE)
+# ----------------- Huber -----------------
 delta = 1
 
-
-            # Função de perda Huber
-def loss(y_real, y_pred):
+def huber_loss(y_real, y_pred):
     error = y_real - y_pred
-
     if abs(error) <= delta:
-        return 0.5 * error ** 2
+        return 0.5 * error**2
     else:
         return delta * (abs(error) - 0.5 * delta)
 
+huber = sum(huber_loss(y[i], y_hat[i]) for i in range(n)) / n
+print("\nRisco Empírico (Huber) =", huber)
 
-            # Cálculo do risco empírico
-risco_empirico = sum(loss(y[i], y_hat[i]) for i in range(n)) / n
 
-print("\nRisco Empírico (Huber) =", risco_empirico)
+# ----------------- RMSE -----------------
+rmse = math.sqrt(mse)
+print("\nRMSE =", rmse)
 
-# Classificacao
 
-    # 0-1 Loss
+# =========================================================
+# -------------------- CLASSIFICACAO -----------------------
+# =========================================================
 
-        # Valores reais (classes)
+print("\n--- Classificacao ---")
+
+# 0-1 Loss
 y = [1, 0, 1, 1]
-
-        # Previsões do modelo
 y_hat = [1, 1, 1, 0]
-
-        # Número de observações
 n = len(y)
 
-        # Função de perda 0-1
-def loss(y_real, y_pred):
-    if y_real != y_pred:
-        return 1  # erro
-    else:
-        return 0  # acerto
+def zero_one_loss(y_real, y_pred):
+    return 1 if y_real != y_pred else 0
 
-        # Cálculo do risco empírico (taxa de erro)
-risco_empirico = sum(loss(y[i], y_hat[i]) for i in range(n)) / n
+error_rate = sum(zero_one_loss(y[i], y_hat[i]) for i in range(n)) / n
+print("\nRisco Empírico (0-1 Loss) =", error_rate)
 
-print("\nRisco Empírico (0-1 Loss) =", risco_empirico)
 
-    # Log Loss
-
-import math
-
-        # Valores reais (0 ou 1)
+# Log Loss
 y = [1, 0, 1]
-
-        # Probabilidades previstas pelo modelo
 p = [0.9, 0.2, 0.8]
-
-        # Número de observações
 n = len(y)
 
-        # Função de perda Log Loss
-def loss(y_real, prob):
-    return -(y_real * math.log(prob) + (1 - y_real) * math.log(1 - prob))
+def log_loss(y_real, prob):
+    return -(y_real * math.log(prob) + (1-y_real)*math.log(1-prob))
 
-        # Cálculo do risco empírico
-risco_empirico = sum(loss(y[i], p[i]) for i in range(n)) / n
+logloss = sum(log_loss(y[i], p[i]) for i in range(n)) / n
+print("\nFunção de Perda (Log Loss) =", logloss)
 
-print("\nRisco Empírico (Log Loss) =", risco_empirico)
 
-# Gradiant Descent
+# =========================================================
+# ------------- AVALIACAO DE CLASSIFICACAO -----------------
+# =========================================================
 
-        # Dados
-x = 2
-y = 10
+print("\n--- Avaliacao de Classificacao ---")
 
-        # Peso inicial
+y = [1, 0, 1, 1, 0]
+y_hat = [1, 1, 1, 0, 0]
+n = len(y)
+
+# Accuracy
+accuracy = sum(1 for i in range(n) if y[i] == y_hat[i]) / n
+print("\nAccuracy =", accuracy)
+
+# Precision, Recall, F1
+tp = sum(1 for i in range(n) if y[i]==1 and y_hat[i]==1)
+tn = sum(1 for i in range(n) if y[i]==0 and y_hat[i]==0)
+fp = sum(1 for i in range(n) if y[i]==0 and y_hat[i]==1)
+fn = sum(1 for i in range(n) if y[i]==1 and y_hat[i]==0)
+
+precision = tp/(tp+fp)
+recall = tp/(tp+fn)
+f1 = 2*(precision*recall)/(precision+recall)
+
+print("Precision =", precision)
+print("Recall =", recall)
+print("F1-Score =", f1)
+
+print("\nMatriz de Confusão")
+print("TP =", tp)
+print("TN =", tn)
+print("FP =", fp)
+print("FN =", fn)
+
+
+# =========================================================
+# ---------------- OTIMIZACAO (GRADIENT DESCENT) ----------
+# =========================================================
+
+print("\n--- Otimizacao / Treinamento ---")
+
+x, y = 2, 10
 w = 1
-
-        # Learning rate
 eta = 0.01
 
-        # Previsão
-y_hat = w * x
+y_hat = w*x
+grad = -2*x*(y - y_hat)
+w = w - eta*grad
 
-        # Derivada da loss em relação a w
-gradiente = -2 * x * (y - y_hat)
-
-        # Atualização do peso
-w = w - eta * gradiente
-
-print("\nNovo peso (Gradient Descent) :", w)
-
-#Exemplo Geral
-print("\n--- Exemplo ---")
-# ==============================
-# 1️⃣ DADOS
-# ==============================
-
-# x = variável de entrada
-x = [1, 2, 3]
-
-# y = valores reais
-y = [2, 4, 6]   # relação perfeita y = 2x
+print("\nPeso do modelo após otimização (Gradient Descent) =", w)
 
 
-# ==============================
-# 2️⃣ MODELO (Regressão Linear)
-#    y_hat = w*x + b
-# ==============================
+# =========================================================
+# -------------------- REGULARIZACAO -----------------------
+# =========================================================
 
-w = 0.0   # peso inicial
-b = 0.0   # bias inicial
+print("\n--- Regularizacao ---")
 
-eta = 0.01   # learning rate
-n = len(x)
+weights = [0.5, -1.2, 0.3]
+lambda_ = 0.1
 
+l1 = lambda_ * sum(abs(w) for w in weights)
+l2 = lambda_ * sum(w**2 for w in weights)
 
-# ==============================
-# 3️⃣ TREINAMENTO (Gradient Descent)
-# ==============================
-
-for epoch in range(100):
-
-    # ---- Previsões do modelo ----
-    y_hat = [w * x[i] + b for i in range(n)]
-
-    # ---- LOSS (MSE) ----
-    losses = [(y[i] - y_hat[i])**2 for i in range(n)]
-
-    # ---- RISCO EMPÍRICO (média da loss) ----
-    risco_empirico = sum(losses) / n
-
-    # ---- Cálculo dos Gradientes ----
-    dw = sum(-2 * x[i] * (y[i] - y_hat[i]) for i in range(n)) / n
-    db = sum(-2 * (y[i] - y_hat[i]) for i in range(n)) / n
-
-    # ---- GRADIENT DESCENT (atualização dos parâmetros) ----
-    w = w - eta * dw
-    b = b - eta * db
+print("\nPenalização L1 (Lasso) =", l1)
+print("Penalização L2 (Ridge) =", l2)
 
 
-# ==============================
-# 4️⃣ RESULTADO FINAL
-# ==============================
+# =========================================================
+# ------------------- GENERALIZACAO ------------------------
+# =========================================================
 
-print("Peso final (w):", round(w, 4))
-print("Bias final (b):", round(b, 4))
-print("Risco Empírico final:", round(risco_empirico, 6))
+print("\n--- Generalizacao do Modelo ---")
+
+erro_treino = 0.05
+erro_teste = 0.25
+
+print("\nErro de Treino =", erro_treino)
+print("Erro de Teste =", erro_teste)
+
+      
